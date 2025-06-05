@@ -1,0 +1,52 @@
+services:
+  app:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+      args:
+        USER_ID: '${WWWUSER:-1000}'
+        GROUP_ID: '${WWWGROUP:-1000}'
+        USER: '${USER:-whoami}'
+    container_name: ecommerce-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ../backend:/var/www
+      - ./opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
+    depends_on:
+      - db
+    networks:
+      - laravel
+
+  webserver:
+    image: nginx:stable-alpine
+    container_name: ecommerce-nginx
+    restart: unless-stopped
+    ports:
+      - "8005:80"
+    volumes:
+      - ../backend:/var/www
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - app
+    networks:
+      - laravel
+
+  db:
+    image: mysql:8.0
+    container_name: ecommerce-db
+    restart: unless-stopped
+    volumes:
+      - mysql_storage:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    networks:
+      - laravel
+
+networks:
+  laravel:
+    driver: bridge
+volumes:
+  mysql_storage:
