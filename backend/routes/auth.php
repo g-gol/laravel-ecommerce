@@ -5,8 +5,21 @@ use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Admin\RegisteredUserController as AdminRegisteredUserController;
+use App\Http\Controllers\Admin\SessionController as AdminSessionController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+
+
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [AdminRegisteredUserController::class, 'create'])->name('register.form');
+    Route::get('/login', [AdminSessionController::class, 'create'])->name('login.form');
+
+    Route::prefix('admin')->as('admin.')->group(function () {
+        Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+        Route::post('/login', [AdminSessionController::class, 'store'])->name('login');
+    });
+});
 
 Route::post('/register', [RegisteredUserController::class, 'store'])
     ->middleware('guest')
