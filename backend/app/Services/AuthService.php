@@ -13,7 +13,7 @@ use Illuminate\Validation\ValidationException;
 
 class AuthService
 {
-    public function register(Request $request): void
+    public function register(Request $request): User
     {
         $request->validate([
             'username' => ['required', 'string', 'max:255'],
@@ -30,6 +30,8 @@ class AuthService
         event(new Registered($user));
 
         Auth::login($user);
+
+        return $user;
     }
 
     function login(LoginRequest $request): void

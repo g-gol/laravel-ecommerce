@@ -11,7 +11,7 @@ class RegisteredUserController extends Controller
 {
     public function store(Request $request, AuthService $auth): Response
     {
-        $auth->register($request);
+        $auth->register($request)->assignRole('customer');
 
         return response()->noContent();
     }
