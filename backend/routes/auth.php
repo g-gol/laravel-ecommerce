@@ -11,13 +11,14 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware('guest')->group(function () {
-    Route::prefix('admin')->as('admin.')->group(function () {
+Route::prefix('admin')->as('admin.')->group(function () {
+    Route::middleware('guest')->group(function () {
         Route::get('/register', [AdminRegisteredUserController::class, 'create'])->name('register.form');
         Route::get('/login', [AdminSessionController::class, 'create'])->name('login.form');
         Route::post('/register', [AdminRegisteredUserController::class, 'store'])->name('register');
         Route::post('/login', [AdminSessionController::class, 'store'])->name('login');
     });
+    Route::delete('/logout', [AdminSessionController::class, 'destroy'])->name('logout')->middleware('auth');
 });
 
 Route::post('/register', [RegisteredUserController::class, 'store'])
