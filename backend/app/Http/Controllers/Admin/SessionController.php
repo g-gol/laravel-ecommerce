@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Services\AuthService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,22 +18,16 @@ class SessionController extends Controller
         return view('auth.login');
     }
 
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(LoginRequest $request, AuthService $auth): RedirectResponse
     {
-        $request->authenticate();
-
-        $request->session()->regenerate();
+        $auth->login($request);
 
         return redirect('home');
     }
 
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request, AuthService $auth): RedirectResponse
     {
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
+        $auth->logout($request);
 
         return redirect('admin.login.form');
     }
