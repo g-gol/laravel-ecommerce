@@ -12,11 +12,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware('guest')->group(function () {
-    Route::get('/register', [AdminRegisteredUserController::class, 'create'])->name('register.form');
-    Route::get('/login', [AdminSessionController::class, 'create'])->name('login.form');
-
     Route::prefix('admin')->as('admin.')->group(function () {
-        Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+        Route::get('/register', [AdminRegisteredUserController::class, 'create'])->name('register.form');
+        Route::get('/login', [AdminSessionController::class, 'create'])->name('login.form');
+        Route::post('/register', [AdminRegisteredUserController::class, 'store'])->name('register');
         Route::post('/login', [AdminSessionController::class, 'store'])->name('login');
     });
 });
