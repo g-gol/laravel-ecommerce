@@ -3,9 +3,9 @@
        aria-label="Sidebar">
     <div class="flex flex-col justify-between h-full px-3 py-4 overflow-y-auto text-gray-100 bg-gray-800">
         <ul class="space-y-2 font-medium">
-            <x-dashboard.sidebar-link>Dashboard</x-dashboard.sidebar-link>
+            <x-dashboard.sidebar-link :to="route('admin.home')">Dashboard</x-dashboard.sidebar-link>
             @can('access-user')
-                <x-dashboard.sidebar-link emoji="👨‍👨‍👦">Users</x-dashboard.sidebar-link>
+                <x-dashboard.sidebar-link :to="route('admin.users')" emoji="👨‍👨‍👦">Users</x-dashboard.sidebar-link>
             @endcan
             @can('access-product')
                 <x-dashboard.sidebar-link emoji="🍟">Products</x-dashboard.sidebar-link>
