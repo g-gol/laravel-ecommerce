@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Auth;
 
+use Database\Seeders\DatabaseSeeder;
+use Database\Seeders\RoleAndPermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -11,8 +13,10 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register(): void
     {
+        $this->seed(RoleAndPermissionSeeder::class);
+
         $response = $this->post('/register', [
-            'name' => 'Test User',
+            'username' => 'Test User',
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
