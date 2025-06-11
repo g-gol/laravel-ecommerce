@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Role;
 use App\Models\User;
-
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,6 +25,13 @@ class DatabaseSeeder extends Seeder
             'password' => 'qwerty123'
         ]);
 
-        $user->assignRole('admin');
+        $roles = Role::toArray();
+        $user->assignRole(Role::ADMIN->value);
+
+        $users = User::factory(50)->create();
+
+        $users->map(function ($user) use ($roles) {
+            $user->assignRole(Arr::random($roles));
+        });
     }
 }
