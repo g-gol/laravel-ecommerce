@@ -9,5 +9,6 @@ Route::middleware('can:access-user')
     ->prefix('users')
     ->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('users');
-        Route::get('/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::put('/{user}', [UserController::class, 'update'])->name('users.update');
     });
