@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\Role;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminUserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
-use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
@@ -25,16 +24,9 @@ class UserController extends Controller
         return view('users.edit', compact('user', 'roles'));
     }
 
-    public function update(Request $request, User $user): RedirectResponse
+    public function update(AdminUserUpdateRequest $request, User $user): RedirectResponse
     {
-        $validated = $request->validate([
-            'username' => ['required', 'max:100', Rule::unique('users', 'username')->ignore($user->id)],
-            'email' => ['required', 'max:100', 'email', Rule::unique('users', 'email')->ignore($user->id)],
-            'verify' => ['nullable'],
-            'roles' => ['required', 'array', 'min:1'],
-            'roles.*' => ['required', 'string', 'exists:roles,name'],
-            'password' => ['nullable', Rules\Password::defaults()]
-        ]);
+        $validated = $request->validated();
 
         $user->updateOrFail([
             'username' => $validated['username'],
