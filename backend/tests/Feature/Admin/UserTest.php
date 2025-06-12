@@ -98,4 +98,12 @@ class UserTest extends TestCase
         $this->assertTrue($user->fresh()->hasVerifiedEmail());
     }
 
+    public function test_admin_can_delete_user(): void
+    {
+        $user = User::factory()->create();
+
+        $this->delete(route('admin.users.delete', $user));
+
+        $this->assertModelMissing($user);
+    }
 }

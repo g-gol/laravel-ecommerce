@@ -47,4 +47,15 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+
+    public function destroy(User $user): RedirectResponse
+    {
+        if ($user->id === auth()->id()) {
+            abort(403, 'Cannot delete yourself');
+        }
+
+        $user->delete();
+
+        return redirect()->back();
+    }
 }

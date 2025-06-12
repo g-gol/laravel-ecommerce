@@ -11,4 +11,5 @@ Route::middleware('can:access-user')
         Route::get('/', [UserController::class, 'index'])->name('users');
         Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
         Route::put('/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.delete');
     });
