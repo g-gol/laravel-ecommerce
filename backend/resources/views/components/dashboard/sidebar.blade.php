@@ -8,7 +8,7 @@
                 <x-dashboard.sidebar-link :to="route('admin.users')" emoji="👨‍👨‍👦">Users</x-dashboard.sidebar-link>
             @endcan
             @can('access-product')
-                <x-dashboard.sidebar-link emoji="🍟">Products</x-dashboard.sidebar-link>
+                <x-dashboard.sidebar-link :to="route('admin.products')" emoji="🍟">Products</x-dashboard.sidebar-link>
             @endcan
         </ul>
         <ul class="space-y-2 font-medium mb-4">
