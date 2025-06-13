@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\Role;
+use App\Models\Product;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -28,10 +29,16 @@ class DatabaseSeeder extends Seeder
         $roles = Role::toArray();
         $user->assignRole(Role::ADMIN->value);
 
-        $users = User::factory(50)->create();
+        $users = User::factory(20)->create();
 
         $users->map(function ($user) use ($roles) {
             $user->assignRole(Arr::random($roles));
+        });
+
+        Product::factory(100)->create(function () use ($users) {
+            return [
+                'user_id' => $users->random()->id
+            ];
         });
     }
 }
