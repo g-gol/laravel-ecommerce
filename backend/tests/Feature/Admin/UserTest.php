@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Admin;
 
 use App\Enums\Role;
 use App\Models\User;
@@ -75,13 +75,13 @@ class UserTest extends TestCase
 
         $response = $this->put(
             route('admin.users.update', $user),
-            $this->getGenericUserData(password: null, roles: [Role::CUSTOMER->value])
+            $this->getGenericUserData(roles: [Role::CUSTOMER->value], password: null)
         );
 
 
         $this->assertFalse(Hash::check('', $user->fresh()->password));
         $response->assertRedirect();
-        $this->assertTrue(empty(session('errors')));
+        $this->assertEmpty(session('errors'));
     }
 
     public function test_admin_can_verify_email(): void
