@@ -15,4 +15,5 @@ enum Permission: string
     case CREATE_PRODUCT = 'create-product';
     case EDIT_PRODUCT = 'edit-product';
     case DELETE_PRODUCT = 'delete-product';
+    case VIEW_PRODUCT = 'view-product';
 }
