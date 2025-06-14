@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -49,6 +50,29 @@ class ProductController extends Controller
 
     public function edit(Product $product): View
     {
-        return view('products.edit');
+        $statuses = ProductStatus::toArray();
+        return view('products.edit', compact('product', 'statuses'));
+    }
+
+    public function update(Request $request, Product $product): RedirectResponse
+    {
+        $validated= $request->validate([
+            'name' => ['required', 'min:3', 'max:255'],
+            'excerpt' => ['required', 'min:20', 'max:2000'],
+            'description' => ['required', 'min:20', 'max:10000'],
+            'price' => ['required', 'numeric', 'min:1'],
+            'status' => ['required', Rule::enum(ProductStatus::class)],
+            'image' => ['nullable']
+        ]);
+
+        $product->updateOrFail($validated);
+
+        return redirect()->back();
+    }
+    public function destroy(Product $product): RedirectResponse
+    {
+        $product->delete();
+
+        return redirect()->back();
     }
 }
