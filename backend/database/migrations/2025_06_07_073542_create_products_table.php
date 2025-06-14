@@ -19,7 +19,6 @@ return new class () extends Migration {
             $table->string('slug')->unique();
             $table->text('excerpt');
             $table->text('description');
-            $table->boolean('published');
             $table->decimal('price', 10,2);
             $table->enum('status', ProductStatus::toArray());
             $table->string('image')->nullable();

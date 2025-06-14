@@ -23,7 +23,6 @@ class ProductFactory extends Factory
             'slug' => fake()->unique()->slug(),
             'excerpt' => fake()->text(),
             'description' => fake()->text(1000),
-            'published' => fake()->boolean(70),
             'price' => fake()->randomDigitNotZero() * 10,
             'status' => fake()->randomElement(ProductStatus::toArray())
         ];
