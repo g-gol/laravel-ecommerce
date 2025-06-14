@@ -39,10 +39,9 @@ class ProductController extends Controller
         ]);
 
 
-        $product = auth()->user()->products()->create([
+         auth()->user()->products()->create([
             ...$validated,
             'status' => ProductStatus::PENDING->value,
-            'slug' => Str::slug($validated['name'])
         ]);
 
         return redirect(route('admin.products'));
