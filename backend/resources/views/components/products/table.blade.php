@@ -1,6 +1,9 @@
 @props(['products'])
 <div class="relative shadow-md sm:rounded-lg w-3/4">
-    <x-table.search/>
+    <div class="flex justify-between">
+        <x-table.search/>
+        <a href="{{ route('admin.products.create') }}" class="text-blue-600 underline">Create new</a>
+    </div>
     <x-table.layout>
         <x-table.thead>
             <x-table.th>
@@ -20,7 +23,8 @@
             @foreach ($products as $product)
                 <x-table.row>
                     <x-table.td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
-                        <a href="{{ route('admin.products.show', $product) }}" class="underline text-base font-semibold">{{ $product->name }}</a>
+                        <a href="{{ route('admin.products.show', $product) }}"
+                           class="underline text-base font-semibold">{{ $product->name }}</a>
                     </x-table.td>
                     <x-table.td>
                         {{ $product->status }}
@@ -48,5 +52,8 @@
             @endforeach
         </x-table.tbody>
     </x-table.layout>
-    {{ $products->links('vendor.pagination.tailwind') }}
+    <div class="mt-4 px-2">
+        {{ $products->links('vendor.pagination.tailwind') }}
+    </div>
+
 </div>
