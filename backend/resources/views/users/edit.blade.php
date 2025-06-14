@@ -1,7 +1,7 @@
 <x-dashboard.layout>
     <x-slot name="title">Edit user</x-slot>
     <h1 class="text-3xl">Edit {{ $user->username }}</h1>
-    <div class="flex flex-col items-center h-48 mb-4 rounded-sm w-full">
+    <div class="flex flex-col items-center mb-4 rounded-sm w-full">
         <x-form.layout :action="route('admin.users.update', $user)" method="put">
             <x-form.text-input label="username" name="username" :value="$user->username" />
             <x-form.text-input type="email" label="email" name="email" :value="$user->email" />

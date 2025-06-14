@@ -9,5 +9,6 @@
                        border-gray-600 placeholder-gray-400 text-white
                        focus:border-blue-500"
            placeholder="{{ $placeholder ?? ucfirst($name) }}"
+           value="{{ $value }}"
            {{ $required ? 'required' : '' }}/>
 </div>

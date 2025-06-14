@@ -1,7 +1,7 @@
 <x-dashboard.layout>
     <x-slot name="title">{{ $product->name }}</x-slot>
 
-    <div class="flex flex-col h-48 mb-16 space-y-8 mx-auto rounded-sm w-3/4">
+    <div class="flex flex-col mb-16 space-y-8 mx-auto rounded-sm w-3/4">
         <div class="flex text-3xl justify-between">
             <h1 class="">{{ $product->name }}</h1>
             @can('edit-product')
