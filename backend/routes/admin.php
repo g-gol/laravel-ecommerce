@@ -19,7 +19,7 @@ Route::middleware('can:access-product')
     ->group(function () {
         Route::get('/', [ProductController::class, 'index'])->name('products');
         Route::get('/create', [ProductController::class, 'create'])->name('products.create');
-        Route::get('/{product}', [ProductController::class, 'show'])->name('products.show');
+        Route::get('/{product:slug}', [ProductController::class, 'show'])->name('products.show');
         Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
         Route::post('/{product}', [ProductController::class, 'store'])->name('products.store');
         Route::put('/{product}', [ProductController::class, 'update'])->name('products.update');
