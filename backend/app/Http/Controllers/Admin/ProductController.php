@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\StoreProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -29,22 +32,17 @@ class ProductController extends Controller
         return view('products.create');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreProductRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => ['required', 'min:3', 'max:255'],
-            'excerpt' => ['required', 'min:20', 'max:2000'],
-            'description' => ['required', 'min:20', 'max:10000'],
-            'price' => ['required', 'numeric', 'min:1'],
-            'image' => ['nullable', 'image']
-        ]);
+        $validated = Arr::except($request->validated(), 'image');
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store(options: 'public');
+            $image = $request->file('image')->store(options: 'public');
         }
 
          auth()->user()->products()->create([
             ...$validated,
+            'image' => $image ?? null,
             'status' => ProductStatus::PENDING->value,
         ]);
 
@@ -57,18 +55,15 @@ class ProductController extends Controller
         return view('products.edit', compact('product', 'statuses'));
     }
 
-    public function update(Request $request, Product $product): RedirectResponse
+    public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
-        $validated= $request->validate([
-            'name' => ['required', 'min:3', 'max:255'],
-            'excerpt' => ['required', 'min:20', 'max:2000'],
-            'description' => ['required', 'min:20', 'max:10000'],
-            'price' => ['required', 'numeric', 'min:1'],
-            'status' => ['required', Rule::enum(ProductStatus::class)],
-            'image' => ['nullable']
-        ]);
+        $validated = Arr::except($request->validated(), 'image');
 
-        $product->updateOrFail($validated);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image')->store(options: 'public');
+        }
+
+        $product->updateOrFail([...$validated, $image ?? null]);
 
         return redirect()->back();
     }

@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\Role;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AdminUserUpdateRequest;
+use App\Http\Requests\Admin\AdminUserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class UserController extends Controller
