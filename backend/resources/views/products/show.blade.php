@@ -9,7 +9,11 @@
             @endcan
         </div>
         <div class="p-2">
-            <div class="bg-gray-400 rounded w-1/2 min-h-96"></div>
+            @if($product->image)
+                <div class="bg-gray-400 rounded w-1/2">
+                    <img src="{{ Storage::url($product->image) }}" alt="main image" class="rounded">
+                </div>
+            @endif
         </div>
         <div class="flex justify-between">
             <span>Status: {{ $product->status }}</span>

@@ -2,7 +2,7 @@
     <x-slot name="title">Edit Product</x-slot>
     <h1 class="text-3xl">Edit {{ $product->name }}</h1>
     <div class="flex flex-col items-center mb-4 rounded-sm w-full">
-        <x-form.layout class="w-2/3" :action="route('admin.products.update', $product)">
+        <x-form.layout class="w-2/3" :action="route('admin.products.update', $product)" enctype="multipart/form-data">
             <x-form.text-input label="Edit a name" name="name" required="true" value="{{ $product->name }}"/>
             <x-form.textarea label="Edit an excerpt" name="excerpt" required="true" value="{{ $product->excerpt }}"/>
             <x-form.textarea label="Edit a description" name="description" required="true"

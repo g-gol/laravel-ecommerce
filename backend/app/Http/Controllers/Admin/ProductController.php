@@ -36,9 +36,12 @@ class ProductController extends Controller
             'excerpt' => ['required', 'min:20', 'max:2000'],
             'description' => ['required', 'min:20', 'max:10000'],
             'price' => ['required', 'numeric', 'min:1'],
-            'image' => ['nullable']
+            'image' => ['nullable', 'image']
         ]);
 
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store(options: 'public');
+        }
 
          auth()->user()->products()->create([
             ...$validated,
