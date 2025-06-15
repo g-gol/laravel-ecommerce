@@ -10,8 +10,8 @@
         </div>
         <div class="p-2">
             @if($product->image)
-                <div class="bg-gray-400 rounded w-1/2">
-                    <img src="{{ Storage::url($product->image) }}" alt="main image" class="rounded">
+                <div class="rounded max-w-1/2">
+                    <img src="{{ Storage::url($product->image) }}" alt="main image" class="h-96 object-fill rounded">
                 </div>
             @endif
         </div>
