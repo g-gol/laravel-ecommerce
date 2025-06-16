@@ -16,4 +16,9 @@ enum Permission: string
     case EDIT_PRODUCT = 'edit-product';
     case DELETE_PRODUCT = 'delete-product';
     case VIEW_PRODUCT = 'view-product';
+
+    case ACCESS_ORDER = 'access-order';
+    case EDIT_ORDER = 'edit-order';
+    case VIEW_ORDER = 'view-order';
+    case CANCEL_ORDER = 'cancel-order';
 }

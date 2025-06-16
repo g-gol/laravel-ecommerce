@@ -41,11 +41,16 @@ class RoleAndPermissionSeeder extends Seeder
                     PermissionEnum::EDIT_PRODUCT,
                     PermissionEnum::DELETE_PRODUCT,
                     PermissionEnum::VIEW_PRODUCT,
+                    PermissionEnum::ACCESS_ORDER,
+                    PermissionEnum::EDIT_ORDER,
+                    PermissionEnum::VIEW_ORDER,
+                    PermissionEnum::CANCEL_ORDER,
                 ];
                 break;
             case RoleEnum::CUSTOMER:
                 $permissions = [
-                    PermissionEnum::VIEW_PRODUCT
+                    PermissionEnum::VIEW_PRODUCT,
+                    PermissionEnum::CANCEL_ORDER,
                 ];
                 break;
         }
