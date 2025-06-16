@@ -5,10 +5,10 @@
         <ul class="space-y-2 font-medium">
             <x-dashboard.sidebar-link :to="route('admin.home')">Dashboard</x-dashboard.sidebar-link>
             @can('edit-user')
-                <x-dashboard.sidebar-link :to="route('admin.users')" emoji="👨‍👨‍👦">Users</x-dashboard.sidebar-link>
+                <x-dashboard.sidebar-link :to="route('admin.users.index')" emoji="👨‍👨‍👦">Users</x-dashboard.sidebar-link>
             @endcan
             @can('edit-product')
-                <x-dashboard.sidebar-link :to="route('admin.products')" emoji="🍟">Products</x-dashboard.sidebar-link>
+                <x-dashboard.sidebar-link :to="route('admin.products.index')" emoji="🍟">Products</x-dashboard.sidebar-link>
             @endcan
             @can('edit-product')
                 <x-dashboard.sidebar-link :to="route('admin.orders.index')" emoji="⚡">Orders</x-dashboard.sidebar-link>

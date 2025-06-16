@@ -41,7 +41,7 @@
 
                     <x-table.td>
                         @can('delete-product')
-                            <form action="{{ route('admin.products.delete', $product) }}" method="post">
+                            <form action="{{ route('admin.products.destroy', $product) }}" method="post">
                                 @csrf
                                 @method('delete')
                                 <button class="font-medium text-red-600 hover:underline" type="submit">Delete</button>

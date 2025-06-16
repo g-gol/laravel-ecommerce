@@ -2,7 +2,7 @@
     <x-slot name="title">Create Product</x-slot>
     <h1 class="text-3xl">Creat new Product</h1>
     <div class="flex flex-col items-center mb-4 rounded-sm w-full">
-        <x-form.layout class="w-2/3" :action="route('admin.products.create')" enctype="multipart/form-data">
+        <x-form.layout class="w-2/3" :action="route('admin.products.store')" enctype="multipart/form-data">
             <x-form.text-input label="Enter a name" name="name" required="true"/>
             <x-form.textarea label="Enter an excerpt" name="excerpt" required="true"/>
             <x-form.textarea label="Enter a description" name="description" required="true"/>

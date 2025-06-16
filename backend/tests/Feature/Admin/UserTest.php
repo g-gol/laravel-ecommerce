@@ -34,7 +34,7 @@ class UserTest extends TestCase
 
     public function test_admin_can_access_users(): void
     {
-        $response = $this->get(route('admin.users'));
+        $response = $this->get(route('admin.users.index'));
 
         $response->assertStatus(200);
     }
@@ -43,7 +43,7 @@ class UserTest extends TestCase
     {
         $this->actingAs(User::factory()->create()->assignRole(Role::EDITOR->value));
 
-        $response = $this->get(route('admin.users'));
+        $response = $this->get(route('admin.users.index'));
 
         $response->assertForbidden();
     }
@@ -52,7 +52,7 @@ class UserTest extends TestCase
     {
         $this->actingAs(User::factory()->create()->assignRole(Role::CUSTOMER->value));
 
-        $response = $this->get(route('admin.users'));
+        $response = $this->get(route('admin.users.index'));
 
         $response->assertForbidden();
     }
