@@ -25,7 +25,7 @@ class ProductTest extends TestCase
     public function test_editor_can_create_product(): void
     {
         $this->post(route('admin.products.create'), [
-            'name' => 'asdfas',
+            'name' => fake()->words(3, true),
             'excerpt' => fake()->text(),
             'description' => fake()->text(1000),
             'price' => fake()->randomDigitNotZero() * 10,
@@ -70,6 +70,20 @@ class ProductTest extends TestCase
         $this->actingAs(User::factory()->create()->assignRole(Role::CUSTOMER->value));
 
         $response = $this->get(route('admin.products'));
+
+        $response->assertForbidden();
+    }
+
+    public function test_customer_cannot_create_products(): void
+    {
+        $this->actingAs(User::factory()->create()->assignRole(Role::CUSTOMER->value));
+
+        $response = $this->post(route('admin.products.create'), [
+            'name' => fake()->words(3, true),
+            'excerpt' => fake()->text(),
+            'description' => fake()->text(1000),
+            'price' => fake()->randomDigitNotZero() * 10,
+        ]);
 
         $response->assertForbidden();
     }
