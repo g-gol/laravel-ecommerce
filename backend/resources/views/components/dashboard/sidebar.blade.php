@@ -4,11 +4,14 @@
     <div class="flex flex-col justify-between h-full px-3 py-4 overflow-y-auto text-gray-100 bg-gray-800">
         <ul class="space-y-2 font-medium">
             <x-dashboard.sidebar-link :to="route('admin.home')">Dashboard</x-dashboard.sidebar-link>
-            @can('access-user')
+            @can('edit-user')
                 <x-dashboard.sidebar-link :to="route('admin.users')" emoji="👨‍👨‍👦">Users</x-dashboard.sidebar-link>
             @endcan
-            @can('access-product')
+            @can('edit-product')
                 <x-dashboard.sidebar-link :to="route('admin.products')" emoji="🍟">Products</x-dashboard.sidebar-link>
+            @endcan
+            @can('edit-product')
+                <x-dashboard.sidebar-link :to="route('admin.orders.index')" emoji="⚡">Orders</x-dashboard.sidebar-link>
             @endcan
         </ul>
         <ul class="space-y-2 font-medium mb-4">
