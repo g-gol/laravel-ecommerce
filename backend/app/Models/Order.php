@@ -19,6 +19,12 @@ class Order extends Model
         'shipping_address'
     ];
 
+    public function updateTotal(): void
+    {
+        $this->total = $this->items()->sum(\DB::raw('quantity * price'));
+        $this->save();
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
