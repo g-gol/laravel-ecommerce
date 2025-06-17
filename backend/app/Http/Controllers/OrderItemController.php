@@ -24,4 +24,14 @@ class OrderItemController extends Controller
 
         return redirect()->back();
     }
+
+    public function destroy(string $id): RedirectResponse
+    {
+        $item = OrderItem::findOrFail($id);
+        $order = $item->order;
+        $item->delete();
+        $order->updateTotal();
+
+        return redirect()->back();
+    }
 }

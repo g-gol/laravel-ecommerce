@@ -18,9 +18,14 @@
     </x-table.thead>
     <x-table.tbody>
         @foreach($items as $item)
-            <form action="{{ route('admin.orders.items.update', $item) }}" method="post">
+            <form id="delete-form{{ $item->id }}" action="{{ route('admin.orders.items.destroy', $item) }}" method="post">
+                @csrf
+                @method('delete')
+            </form>
+            <form id="update-form{{ $item->id }}" action="{{ route('admin.orders.items.update', $item) }}" method="post">
                 @csrf
                 @method('put')
+            </form>
                 <tr x-data="{ editMode: false, quantity: {{ $item->quantity }} }">
                     <x-table.td>
                         {{ $item->product->name }}
@@ -34,7 +39,7 @@
                                 focus:ring-gray-100 focus:ring-2 focus:outline-none">
                                 -
                             </button>
-                            <input type="text" id="quantity-input" name="quantity" inputmode="numeric"
+                            <input form="update-form{{ $item->id }}" type="text" id="quantity-input" name="quantity" inputmode="numeric"
                                    @input="quantity= $event.target.value.replace(/[^0-9]/g, '')"
                                    class="bg-gray-50 border-x-0 border-gray-300 h-8 text-center text-gray-900
                                text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2"
@@ -49,7 +54,7 @@
                     <x-table.td>
                         <div x-show="!editMode" class="font-bold h-8 p-1">{{  $item->price }}</div>
                         <div x-show="editMode" class="relative flex items-center max-w-[4rem]">
-                            <input type="text" id="quantity-input" name="price"
+                            <input form="update-form{{ $item->id }}" type="text" id="quantity-input" name="price"
                                    class="bg-gray-50 border-x-0 border-gray-600 h-8 text-center
                                text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500
                                block w-full py-2"
@@ -59,14 +64,16 @@
                     <x-table.td>
                         <button x-show="!editMode" x-on:click.prevent="editMode=true" class="text-blue-600 cursor-pointer">Edit
                         </button>
-                        <button type="submit" x-show="editMode" class="text-blue-600 cursor-pointer">Save</button>
+                        <button form="update-form{{ $item->id }}" type="submit" x-show="editMode" class="text-blue-600 cursor-pointer">Save</button>
                     </x-table.td>
                     <x-table.td>
                         <button x-show="editMode" x-on:click.prevent="editMode=false" class="text-red-500 cursor-pointer">Cancel
                         </button>
                     </x-table.td>
+                    <x-table.td>
+                        <button type="submit" form="delete-form{{ $item->id }}" class="text-red-500 cursor-pointer">Delete</button>
+                    </x-table.td>
                 </tr>
-            </form>
         @endforeach
     </x-table.tbody>
 </x-table.layout>

@@ -26,4 +26,5 @@ Route::middleware('can:edit-order')
         Route::patch('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 
         Route::put('/orders/items/{id}', [OrderItemController::class, 'update'])->name('orders.items.update');
+        Route::delete('/orders/items/{id}', [OrderItemController::class, 'destroy'])->name('orders.items.destroy');
     });
