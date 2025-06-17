@@ -25,7 +25,10 @@
             @foreach ($orders as $order)
                 <x-table.row>
                     <x-table.td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
-                        {{ $order->id }}
+                        <a href="{{ route('admin.orders.show', $order) }}"
+                           class="text-blue-600 underline">
+                            {{ $order->id }}
+                        </a>
                     </x-table.td>
                     <x-table.td>
                         {{ $order->status }}
@@ -45,10 +48,10 @@
                     </x-table.td>
 
                     <x-table.td>
-                        @if($order->status !== 'canceled')
-                            <form action="{{ route('admin.orders.destroy', $order) }}" method="post">
+                        @if(!in_array($order->status, ['cancelled', 'delivered']))
+                            <form action="{{ route('admin.orders.cancel', $order) }}" method="post">
                                 @csrf
-                                @method('put')
+                                @method('patch')
                                 <button class="font-medium text-red-600 hover:underline" type="submit">Cancel</button>
                             </form>
                         @endif
