@@ -8,10 +8,7 @@ use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -46,7 +43,7 @@ class ProductController extends Controller
             'status' => ProductStatus::PENDING->value,
         ]);
 
-        return redirect(route('admin.products'));
+        return redirect(route('admin.products.index'));
     }
 
     public function edit(Product $product): View
