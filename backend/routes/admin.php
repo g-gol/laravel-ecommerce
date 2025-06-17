@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\OrderItemController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, 'index'])->name('home');
@@ -21,6 +22,8 @@ Route::middleware('can:edit-product')
     });
 Route::middleware('can:edit-order')
     ->group(function () {
-        Route::resource('orders', OrderController::class)->except(['create']);
+        Route::resource('orders', OrderController::class)->except(['create', 'destroy']);
         Route::patch('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
+
+        Route::put('/orders/items/{id}', [OrderItemController::class, 'update'])->name('orders.items.update');
     });
