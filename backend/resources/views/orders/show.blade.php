@@ -11,6 +11,11 @@
 
         <h2 class="text-xl">Ordered products:</h2>
         <x-orders.items-table :items="$items" />
+        <form action="{{ route('admin.orders.items.store', $order) }}" method="post" class="flex w-1/2 items-center align-middle">
+            @csrf
+            <x-form.text-input label="Add a new item" name="product_id" placeholder="Product id" required="true"/>
+            <button type="submit" class="ml-2 p-2 rounded border border-blue-500 bg-blue-600 font-bold text-white">Add</button>
+        </form>
 
         <h2 class="text-xl">Total price: {{ $order->total }}</h2>
         <h2 class="text-xl">Status: {{ $order->status }}</h2>

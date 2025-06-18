@@ -23,8 +23,14 @@ Route::middleware('can:edit-product')
 Route::middleware('can:edit-order')
     ->group(function () {
         Route::resource('orders', OrderController::class)->except(['create', 'destroy']);
-        Route::patch('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 
-        Route::put('/orders/items/{id}', [OrderItemController::class, 'update'])->name('orders.items.update');
-        Route::delete('/orders/items/{id}', [OrderItemController::class, 'destroy'])->name('orders.items.destroy');
+        Route::prefix('orders')
+            ->as('orders.')
+            ->group(function () {
+                Route::patch('/{order}/cancel', [OrderController::class, 'cancel'])->name('cancel');
+
+                Route::post('/{order}/items', [OrderItemController::class, 'store'])->name('items.store');
+                Route::put('/items/{id}', [OrderItemController::class, 'update'])->name('items.update');
+                Route::delete('/items/{id}', [OrderItemController::class, 'destroy'])->name('items.destroy');
+            });
     });
