@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@primeuix/themes": "^1.1.2",
+    "@primevue/forms": "^4.3.5",
     "@tailwindcss/vite": "^4.1.10",
     "axios": "^1.9.0",
     "dayjs": "^1.11.13",

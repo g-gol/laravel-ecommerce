@@ -1,9 +1,10 @@
 <script setup>
 import Button from "primevue/button";
+import Home from "./features/home/Home.vue";
 </script>
 
 <template>
-  <Button>Verify</Button>
+  <RouterView/>
 </template>
 
 <style scoped></style>
