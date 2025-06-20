@@ -3,9 +3,9 @@ import AuthLayout from "../../components/AuthLayout.vue";
 import {InputText} from "primevue";
 import Button from "primevue/button";
 import {Message} from "primevue";
-import {Form} from "@primevue/forms";
 import axiosClient from "../../axios.js";
 import {ref} from "vue";
+import router from "../../router.js";
 
 const formData = ref({
   username: '',
@@ -14,9 +14,13 @@ const formData = ref({
   password_confirmation: '',
 })
 const errors = ref({})
+
 function register() {
   axiosClient.get('/sanctum/csrf-cookie').then(() => {
     axiosClient.post('/register', formData.value)
+        .then(() => {
+          router.push({name: 'Home'})
+        })
         .catch(err => {
           errors.value = err.response.data.errors
         })
@@ -47,7 +51,8 @@ function register() {
         </Message>
       </div>
       <div class="flex flex-col gap-1">
-        <InputText v-model="formData.password_confirmation" name="password_confirmation" type="password" placeholder="Repeat password" fluid/>
+        <InputText v-model="formData.password_confirmation" name="password_confirmation" type="password"
+                   placeholder="Repeat password" fluid/>
       </div>
 
       <Button @click.prevent="register" type="submit" severity="secondary" label="Submit">Register</Button>
