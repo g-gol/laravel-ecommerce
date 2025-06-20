@@ -1,16 +1,13 @@
 <script setup>
-import useUserStore from "../../stores/user.js";
-import {computed} from "vue";
-import LogoutButton from "../../components/LogoutButton.vue";
+import DefaultLayout from "../../components/DefaultLayout.vue";
+import ProductIndex from "../products/ProductIndex.vue";
 
-const userStore = useUserStore()
-const user = computed(() => userStore.user)
 </script>
 
 <template>
-  <h1 class="text-xl">Hi, {{ user ? user.username : 'anon' }}</h1>
-  <a href="/register">Register</a>
-  <LogoutButton/>
+<DefaultLayout>
+  <ProductIndex/>
+</DefaultLayout>
 </template>
 
 <style scoped>
