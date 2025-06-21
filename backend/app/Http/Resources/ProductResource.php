@@ -22,7 +22,7 @@ class ProductResource extends JsonResource
             'description' => $this
                 ->when($request->is('api/products/*'), fn() => $this->description),
             'price' => $this->price,
-            'image' => $this->image
+            'image' => asset('storage/' . ($this->image ?? 'default.jpg')),
         ];
     }
 }

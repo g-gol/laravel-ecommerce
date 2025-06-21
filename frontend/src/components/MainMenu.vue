@@ -17,7 +17,7 @@ const user = computed(() => userStore.user)
     </template>
     <template #end>
       <Button v-if="user" :label="'Hi, ' + user.username" variant="text" icon="pi pi-user"/>
-      <Button asChild v-slot="slotProps" variant="text">
+      <Button v-else asChild v-slot="slotProps" variant="text">
         <RouterLink :to="{name: 'Login'}" :class="slotProps.class">Login</RouterLink>
       </Button>
       <Button label="Cart" variant="text" icon="pi pi-user"/>
