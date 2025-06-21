@@ -2,13 +2,21 @@ import {createRouter, createWebHistory} from "vue-router"
 import Register from "./features/auth/Register.vue";
 import Home from "./features/home/Home.vue";
 import Login from "./features/auth/Login.vue";
+import DefaultLayout from "./components/DefaultLayout.vue";
 
 const routes = [
     {
         path: '/',
-        name: 'Home',
-        component: Home,
-        meta: {guestOnly: false}
+        component: DefaultLayout,
+        meta: {guestOnly: false},
+        children: [
+            {
+                path: '',
+                name: 'Home',
+                component: Home
+            },
+
+        ]
     },
     {
         path: '/login',
