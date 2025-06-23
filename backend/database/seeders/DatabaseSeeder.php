@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\Role;
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -38,9 +39,11 @@ class DatabaseSeeder extends Seeder
             $user->assignRole(Arr::random($roles));
         });
 
-        $products = Product::factory(100)->create(function () use ($users) {
+        $categories = Category::factory(5)->create();
+        $products = Product::factory(100)->create(function () use ($users, $categories) {
             return [
-                'user_id' => $users->random()->id
+                'user_id' => $users->random()->id,
+                'category_id' => $categories->random()->id
             ];
         });
 
