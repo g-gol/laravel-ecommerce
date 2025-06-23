@@ -6,6 +6,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductController extends Controller
 {
@@ -13,5 +14,10 @@ class ProductController extends Controller
     {
         $products = Product::query()->latest()->paginate(9)->withQueryString();
         return ProductResource::collection($products);
+    }
+
+    public function show(Product $product): JsonResource
+    {
+        return new ProductResource($product);
     }
 }

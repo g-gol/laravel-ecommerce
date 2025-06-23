@@ -3,6 +3,7 @@ import Register from "./features/auth/Register.vue";
 import Home from "./features/home/Home.vue";
 import Login from "./features/auth/Login.vue";
 import DefaultLayout from "./components/DefaultLayout.vue";
+import ProductShow from "./features/products/ProductShow.vue";
 
 const routes = [
     {
@@ -15,7 +16,11 @@ const routes = [
                 name: 'Home',
                 component: Home
             },
-
+            {
+                path: '/products/:id',
+                name: 'ProductShow',
+                component: ProductShow
+            }
         ]
     },
     {

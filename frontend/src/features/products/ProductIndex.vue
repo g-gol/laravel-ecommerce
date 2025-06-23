@@ -52,7 +52,7 @@ function changePage(event) {
         <template #footer>
           <div class="flex justify-between gap-4 mt-1">
             <Button asChild v-slot="slotProps" variant="text" severity="secondary" outlined class="w-full">
-              <RouterLink :to="{name: 'ProductShow'}" :class="slotProps.class">See more</RouterLink>
+              <RouterLink :to="{name: 'ProductShow', params: {id: product.id}}" :class="slotProps.class">See more</RouterLink>
             </Button>
             <Button label="Buy" />
           </div>
