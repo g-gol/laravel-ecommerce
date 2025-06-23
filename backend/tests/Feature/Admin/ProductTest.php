@@ -4,12 +4,10 @@ namespace Tests\Feature\Admin;
 
 use App\Enums\ProductStatus;
 use App\Enums\Role;
-use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use Database\Seeders\RoleAndPermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
