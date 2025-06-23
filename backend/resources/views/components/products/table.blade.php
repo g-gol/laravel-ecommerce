@@ -16,6 +16,9 @@
                 Price
             </x-table.th>
             <x-table.th>
+                Amount
+            </x-table.th>
+            <x-table.th>
                 Action
             </x-table.th>
         </x-table.thead>
@@ -32,6 +35,10 @@
 
                     <x-table.td>
                         {{ $product->price }}
+                    </x-table.td>
+
+                    <x-table.td>
+                        {{ $product->amount }}
                     </x-table.td>
 
                     <x-table.td>

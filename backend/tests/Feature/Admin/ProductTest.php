@@ -4,6 +4,7 @@ namespace Tests\Feature\Admin;
 
 use App\Enums\ProductStatus;
 use App\Enums\Role;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use Database\Seeders\RoleAndPermissionSeeder;
@@ -29,6 +30,7 @@ class ProductTest extends TestCase
             'excerpt' => fake()->text(),
             'description' => fake()->text(1000),
             'price' => fake()->randomDigitNotZero() * 10,
+            'amount' => fake()->randomDigitNotZero()
         ]);
 
         $this->assertDatabaseCount('products', 1);
@@ -47,6 +49,7 @@ class ProductTest extends TestCase
             'description' => fake()->text(1000),
             'price' => fake()->randomDigitNotZero() * 10,
             'status' => ProductStatus::PENDING->value,
+            'amount' => fake()->randomDigitNotZero()
         ]);
 
         $this->assertTrue($product->fresh()->name === $name);

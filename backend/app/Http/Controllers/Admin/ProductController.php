@@ -6,6 +6,7 @@ use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
@@ -26,7 +27,8 @@ class ProductController extends Controller
 
     public function create(): View
     {
-        return view('products.create');
+        $categories = Category::all();
+        return view('products.create', compact('categories'));
     }
 
     public function store(StoreProductRequest $request): RedirectResponse
@@ -55,6 +57,7 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
         $validated = Arr::except($request->validated(), 'image');
+        error_log($validated['amount']);
 
         if ($request->hasFile('image')) {
             $image = $request->file('image')->store(options: 'public');

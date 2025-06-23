@@ -1,7 +1,7 @@
 @props(['label', 'name', 'placeholder', 'required' => false, 'value' => ''])
 <div class="mb-6">
     <label for="{{ $name }}" class="mb-2 text-sm font-medium text-gray-900">
-        Price
+        {{ $label }}
     </label>
     <input type="number" name="{{ $name }}" id="{{ $name }}"
            class="block p-2.5 w-full z-20 ps-10 text-sm rounded-s-lg

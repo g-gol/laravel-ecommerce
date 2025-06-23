@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\ProductStatus;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -20,10 +21,12 @@ class ProductFactory extends Factory
     {
         return [
             'name' => fake()->words(3, true),
+            'category_id' => Category::factory()->create(),
             'slug' => fake()->unique()->slug(),
             'excerpt' => fake()->text(),
             'description' => fake()->text(1000),
             'price' => fake()->randomDigitNotZero() * 10,
+            'amount' => fake()->randomDigitNotZero() * 5,
             'status' => fake()->randomElement(ProductStatus::toArray())
         ];
     }

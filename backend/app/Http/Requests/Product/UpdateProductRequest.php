@@ -28,6 +28,7 @@ class UpdateProductRequest extends FormRequest
             'excerpt' => ['required', 'min:20', 'max:2000'],
             'description' => ['required', 'min:20', 'max:10000'],
             'price' => ['required', 'numeric', 'min:1'],
+            'amount' => ['required', 'numeric', 'min:1'],
             'status' => ['required', Rule::enum(ProductStatus::class)],
             'image' => ['nullable']
         ];
