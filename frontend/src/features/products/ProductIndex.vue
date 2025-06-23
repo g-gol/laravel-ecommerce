@@ -4,32 +4,49 @@ import axiosClient from "../../axios.js";
 import Paginator from 'primevue/paginator';
 import {Card} from "primevue";
 import Button from "primevue/button";
+import {Select} from "primevue";
 
+const orderOptions = ref([
+  { name: 'latest' },
+  { name: 'cheap' },
+  { name: 'expensive' },
+])
+
+const order = ref()
 const products = ref()
 const totalPages = ref()
-const currentPage = ref()
-const perPage = ref(10)
+const perPage = ref(9)
 
 onMounted(() => {
   getProducts()
 })
-
-function getProducts(page = 1) {
-  axiosClient.get(`/api/products?page=${page}`)
+const filters = ref({
+  page: 1,
+  order: null
+})
+function getProducts() {
+  axiosClient.get(`/api/products`, { params: filters.value})
       .then(res => {
         products.value = res.data.data
         totalPages.value = res.data.meta.total
-        currentPage.value = res.data.meta.current_page
         perPage.value = res.data.meta.per_page
-        console.log(res.data)
       })
+}
+function changeOrder() {
+  filters.value.order = order.value.name
+  filters.value.page = 1
+  getProducts()
 }
 
 function changePage(event) {
-  console.log('current: ' + currentPage.value)
-  console.log(event.page)
-  getProducts(event.page + 1)
+  filters.value.page = event.page + 1
+  getProducts()
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
 }
+
 </script>
 
 <template>
@@ -38,6 +55,10 @@ function changePage(event) {
       filters
     </div>
     <div class="col-span-6 grid grid-cols-3 gap-8">
+      <div class="flex justify-between items-baseline col-span-3 mb-8">
+        <span>Page: {{ filters.page }}</span>
+        <Select @change="changeOrder" v-model="order" :options="orderOptions" optionLabel="name" placeholder="default" class="w-full md:w-56" />
+      </div>
       <Card v-for="product in products" style="overflow: hidden" pt:title:class="truncate">
         <template #header>
           <img class="h-52 w-full object-cover" alt="image" :src="product.image"/>
@@ -59,7 +80,7 @@ function changePage(event) {
         </template>
       </Card>
     </div>
-    <Paginator @page="changePage" :totalRecords="totalPages" :rows="perPage" class="col-start-2 col-span-6 mt-8"/>
+    <Paginator @page="changePage" :totalRecords="totalPages" :rows="perPage" :first="(filters.page - 1) * perPage" class="col-start-2 col-span-6 mt-8"/>
   </div>
 
 </template>

@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Traits\HasSlug;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -23,6 +24,23 @@ class Product extends Model
         'status',
         'image'
     ];
+
+    #[Scope]
+    public function filter(Builder $query, array $filters): void
+    {
+        $query->when($filters['order'] ?? false, function (Builder $query, string $order) {
+            switch ($order) {
+                case 'cheap':
+                    $query->orderBy('price');
+                    break;
+                case 'expensive':
+                    $query->orderBy('price', 'desc');
+                    break;
+            }
+
+            return $query;
+        });
+    }
     protected static function booted(): void
     {
         static::creating(function ($product) {
