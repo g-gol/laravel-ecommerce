@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tailwindcss-primeui";
 
 @theme {
   --color-dark: #2D2F32;

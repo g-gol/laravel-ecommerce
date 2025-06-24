@@ -20,7 +20,7 @@ const user = computed(() => userStore.user)
       <Button v-else asChild v-slot="slotProps" variant="text">
         <RouterLink :to="{name: 'Login'}" :class="slotProps.class">Login</RouterLink>
       </Button>
-      <Button label="Cart" variant="text" icon="pi pi-user"/>
+      <Button label="Cart" variant="text" icon="pi pi-cart-arrow-down"/>
     </template>
   </MegaMenu>
 </template>
