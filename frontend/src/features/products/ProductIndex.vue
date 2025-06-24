@@ -5,6 +5,7 @@ import Paginator from 'primevue/paginator';
 import {Card} from "primevue";
 import Button from "primevue/button";
 import {Select} from "primevue";
+import ProductFilters from "./components/ProductFilters.vue";
 
 const orderOptions = ref([
   { name: 'latest' },
@@ -22,7 +23,8 @@ onMounted(() => {
 })
 const filters = ref({
   page: 1,
-  order: null
+  order: null,
+  category: null
 })
 function getProducts() {
   axiosClient.get(`/api/products`, { params: filters.value})
@@ -47,13 +49,15 @@ function changePage(event) {
   })
 }
 
+function changeCategory(id){
+  filters.value.category = id
+  getProducts()
+}
 </script>
 
 <template>
   <div v-if="products" class="w-full grid grid-cols-8 mt-24">
-    <div class="col-span-2">
-      filters
-    </div>
+    <ProductFilters @categoryChanged="changeCategory"/>
     <div class="col-span-6 grid grid-cols-3 gap-8">
       <div class="flex justify-between items-baseline col-span-3 mb-8">
         <span>Page: {{ filters.page }}</span>

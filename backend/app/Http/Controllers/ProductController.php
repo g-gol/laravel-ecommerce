@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        $products = Product::query()->filter(request(['order']))->latest()->paginate(9)->withQueryString();
+        $products = Product::query()->filter(request(['order', 'category']))->latest()->paginate(9)->withQueryString();
         return ProductResource::collection($products);
     }
 

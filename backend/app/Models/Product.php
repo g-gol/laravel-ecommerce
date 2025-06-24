@@ -42,7 +42,13 @@ class Product extends Model
 
             return $query;
         });
+
+        $query->when(
+            $filters['category'] ?? false,
+            fn(Builder $query, string $category) => $query->where('category_id', $category)
+        );
     }
+
     protected static function booted(): void
     {
         static::creating(function ($product) {
