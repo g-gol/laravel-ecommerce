@@ -13,6 +13,9 @@
             @can('edit-product')
                 <x-dashboard.sidebar-link :to="route('admin.orders.index')" emoji="⚡">Orders</x-dashboard.sidebar-link>
             @endcan
+            @can('edit-product')
+                <x-dashboard.sidebar-link :to="route('admin.categories.index')" emoji="⚡">Categories</x-dashboard.sidebar-link>
+            @endcan
         </ul>
         <ul class="space-y-2 font-medium mb-4">
             <x-dashboard.sidebar-link>Hi, {{ auth()->user()->username }}</x-dashboard.sidebar-link>

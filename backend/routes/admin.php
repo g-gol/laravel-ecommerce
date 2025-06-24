@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\OrderItemController;
@@ -19,7 +20,10 @@ Route::middleware('can:edit-user')
 Route::middleware('can:edit-product')
     ->group(function () {
         Route::resource('products', ProductController::class);
+
+        Route::resource('categories', CategoryController::class)->except('show');
     });
+
 Route::middleware('can:edit-order')
     ->group(function () {
         Route::resource('orders', OrderController::class)->except(['create', 'destroy']);
