@@ -11,7 +11,7 @@
             <x-form.number label="Product Price" name="price" placeholder="Only number"/>
 
             <label for="category" class="block mb-2 text-sm font-medium text-gray-900">Category</label>
-            <select class="mb-8" id="category_id" name="category"
+            <select class="mb-8" id="category_id" name="category_id"
                     class="border text-sm rounded-lg bg-gray-700 p-2 border-gray-600
                         placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
                 @foreach($categories as $category)
