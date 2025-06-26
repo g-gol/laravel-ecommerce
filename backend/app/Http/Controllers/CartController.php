@@ -16,6 +16,7 @@ class CartController extends Controller
             'total_price' => $cart->items->sum(fn($item) => $item->price * $item->quantity),
             'items' => $cart?->items->map(function ($item) {
                 return [
+                    'id' => $item->id,
                     'quantity' => $item->quantity,
                     'price' => $item->price,
                     'product' => [

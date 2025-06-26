@@ -5,6 +5,7 @@ import {InputText} from "primevue";
 import Button from "primevue/button";
 import {MegaMenu} from "primevue";
 import useCartStore from "../stores/cart.js";
+import axiosClient from "../axios.js";
 
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
@@ -15,6 +16,7 @@ onMounted(() => {
 })
 
 const isVisible = ref(false)
+
 </script>
 
 <template>
@@ -27,11 +29,12 @@ const isVisible = ref(false)
     <template #end>
 
       <div v-if="cartStore.items" @mouseout="isVisible = false" @mouseover="isVisible = true">
-        <Button :label="'Cart ' + (cartStore.count === null ? '' : cartStore.count)" variant="text"
+        <Button :label="'Cart ' + (cartStore.count === 0 ? '' : cartStore.count)" variant="text"
                 icon="pi pi-cart-arrow-down" class="relative"/>
         <div v-show="isVisible" class="absolute flex flex-col border bg-white">
           <div v-for="item in cartStore.items" class="flex justify-between items-center space-x-8 border-b pr-4">
-            <Button variant="text" icon="pi pi-trash" class="text-red-500 w-1/5"/>
+            <Button @click.prevent="cartStore.removeItem(item.id)" variant="text" icon="pi pi-trash"
+                    class="text-red-500 w-1/5"/>
             <a :href="`/products/${item.product.id}`"
                class="text-xs w-2/3 hover:text-amber-900">{{ item.product.name + ': ' + item.quantity }}</a>
             <span class="font-bold">{{ item.price }}</span>

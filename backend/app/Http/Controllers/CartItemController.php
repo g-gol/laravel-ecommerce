@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -30,6 +31,13 @@ class CartItemController extends Controller
                 'price' => $product->price
             ]);
         }
+
+        return response()->noContent();
+    }
+
+    public function destroy(CartItem $item): Response
+    {
+        $item->delete();
 
         return response()->noContent();
     }
