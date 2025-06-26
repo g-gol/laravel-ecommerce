@@ -81,7 +81,11 @@ const cartStore = useCartStore()
             <Button asChild v-slot="slotProps" variant="text" severity="secondary" outlined class="w-full">
               <RouterLink :to="{name: 'ProductShow', params: {id: product.id}}" :class="slotProps.class">See more</RouterLink>
             </Button>
-            <Button @click.prevent="cartStore.addToCart(product.id)" label="Buy" />
+            <Button v-if="!cartStore.items.some((item) => item.product.id === product.id)" @click.prevent="cartStore.addToCart(product.id)" severity="success" label="Buy" />
+            <Button v-else asChild v-slot="slotProps" severity="primary" class="w-full">
+              <RouterLink :to="{name: 'CartShow'}" :class="slotProps.class">Cart
+              </RouterLink>
+            </Button>
           </div>
         </template>
       </Card>
