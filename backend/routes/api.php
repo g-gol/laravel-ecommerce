@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
@@ -16,3 +18,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{product}', [ProductController::class, 'show']);
 Route::get('/categories', CategoryController::class);
+Route::put('/cart/add', [CartItemController::class, 'update']);
+Route::get('/cart/preview', [CartController::class, 'preview']);

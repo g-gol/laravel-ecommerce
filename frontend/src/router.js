@@ -4,6 +4,7 @@ import Home from "./features/home/Home.vue";
 import Login from "./features/auth/Login.vue";
 import DefaultLayout from "./components/DefaultLayout.vue";
 import ProductShow from "./features/products/ProductShow.vue";
+import CartShow from "./features/cart/CartShow.vue";
 
 const routes = [
     {
@@ -20,6 +21,11 @@ const routes = [
                 path: '/products/:id',
                 name: 'ProductShow',
                 component: ProductShow
+            },
+            {
+                path: '/cart',
+                name: 'CartShow',
+                component: CartShow
             }
         ]
     },

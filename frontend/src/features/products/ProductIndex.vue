@@ -6,6 +6,7 @@ import {Card} from "primevue";
 import Button from "primevue/button";
 import {Select} from "primevue";
 import ProductFilters from "./components/ProductFilters.vue";
+import useCartStore from "../../stores/cart.js";
 
 const orderOptions = ref([
   { name: 'latest' },
@@ -53,6 +54,7 @@ function changeCategory(id){
   filters.value.category = id
   getProducts()
 }
+const cartStore = useCartStore()
 </script>
 
 <template>
@@ -79,7 +81,7 @@ function changeCategory(id){
             <Button asChild v-slot="slotProps" variant="text" severity="secondary" outlined class="w-full">
               <RouterLink :to="{name: 'ProductShow', params: {id: product.id}}" :class="slotProps.class">See more</RouterLink>
             </Button>
-            <Button label="Buy" />
+            <Button @click.prevent="cartStore.addToCart(product.id)" label="Buy" />
           </div>
         </template>
       </Card>
