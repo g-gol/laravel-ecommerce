@@ -18,6 +18,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{product}', [ProductController::class, 'show']);
 Route::get('/categories', CategoryController::class);
-Route::put('/cart/add', [CartItemController::class, 'update']);
-Route::delete('/cart/item/{item}', [CartItemController::class, 'destroy']);
+Route::put('/cart/items', [CartItemController::class, 'update']);
+Route::delete('/cart/items/{item}', [CartItemController::class, 'destroy']);
 Route::get('/cart/preview', [CartController::class, 'preview']);
