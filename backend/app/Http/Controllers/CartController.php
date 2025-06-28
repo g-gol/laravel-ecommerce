@@ -15,13 +15,9 @@ class CartController extends Controller
         if (auth()->check()) {
             $cart = Cart::query()->with('items.product')->where('user_id', auth()->id())->first();
         } else {
-            $guestId = request()->cookie('guest_id');
-            if (!$guestId) {
-                $guestId = (string) Str::uuid();
-                Cookie::queue('guest_id', $guestId, 60 * 24* 30);
-            }
+            $guest_token = request()->cookie('guest_token');
 
-            $cart = Cart::query()->with('items.product')->where(['guest_token' => $guestId])->first();
+            $cart = Cart::query()->with('items.product')->where(['guest_token' => $guest_token])->first();
         }
 
         return response()->json([

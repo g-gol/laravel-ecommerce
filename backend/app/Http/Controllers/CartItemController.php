@@ -7,8 +7,6 @@ use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Str;
 
 class CartItemController extends Controller
 {
@@ -23,13 +21,9 @@ class CartItemController extends Controller
         if (auth()->check()) {
             $cart = Cart::query()->firstOrCreate(['user_id' => auth()->id()]);
         } else {
-           $guestId = $request->cookie('guest_id');
-           if (!$guestId) {
-               $guestId = (string) Str::uuid();
-               Cookie::queue('guest_id', $guestId, 60 * 24* 30);
-           }
+           $guest_token = $request->cookie('guest_token');
 
-           $cart = Cart::query()->firstOrCreate(['guest_token' => $guestId]);
+           $cart = Cart::query()->firstOrCreate(['guest_token' => $guest_token]);
         }
 
         $product = Product::query()->findOrFail($validated['product_id']);
