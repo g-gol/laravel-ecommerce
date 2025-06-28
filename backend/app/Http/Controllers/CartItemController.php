@@ -6,8 +6,9 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Str;
 
 class CartItemController extends Controller
 {
@@ -19,7 +20,18 @@ class CartItemController extends Controller
             'quantity' => ['required', 'integer'],
         ]);
 
-        $cart = Cart::query()->firstOrCreate(['user_id' => auth()->id()]);
+        if (auth()->check()) {
+            $cart = Cart::query()->firstOrCreate(['user_id' => auth()->id()]);
+        } else {
+           $guestId = $request->cookie('guest_id');
+           if (!$guestId) {
+               $guestId = (string) Str::uuid();
+               Cookie::queue('guest_id', $guestId, 60 * 24* 30);
+           }
+
+           $cart = Cart::query()->firstOrCreate(['guest_token' => $guestId]);
+        }
+
         $product = Product::query()->findOrFail($validated['product_id']);
 
         if ($cartItem = $cart->items()->where('product_id', $product->id)->first()) {
