@@ -11,9 +11,9 @@ const useCartStore = defineStore('cart', {
         fetchCart() {
             return axiosClient.get('/api/cart/preview')
                 .then(({data}) => {
-                    this.items = data.items
-                    this.count = data.count
-                    this.total = data.total_price
+                    this.items = data.data.items
+                    this.count = data.data.count
+                    this.total = data.data.total_price
                 })
         },
         addToCart(productId, quantity = 1) {
