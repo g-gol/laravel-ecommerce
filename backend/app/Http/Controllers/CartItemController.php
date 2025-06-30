@@ -2,41 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
 use App\Models\CartItem;
-use App\Models\Product;
+use App\Services\CartService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class CartItemController extends Controller
 {
-
-    public function update(Request $request): Response
+    public function update(Request $request, CartService $cartService): Response
     {
         $validated = $request->validate([
             'product_id' => ['required', 'exists:products,id'],
             'quantity' => ['required', 'integer'],
         ]);
 
-        if (auth()->check()) {
-            $cart = Cart::query()->firstOrCreate(['user_id' => auth()->id()]);
-        } else {
-           $guest_token = $request->cookie('guest_token');
-
-           $cart = Cart::query()->firstOrCreate(['guest_token' => $guest_token]);
-        }
-
-        $product = Product::query()->findOrFail($validated['product_id']);
-
-        if ($cartItem = $cart->items()->where('product_id', $product->id)->first()) {
-            $cartItem->quantity += $validated['quantity'];
-            $cartItem->save();
-        } else {
-            $cart->items()->create([
-                ...$validated,
-                'price' => $product->price
-            ]);
-        }
+        $cartService->addItem($validated['product_id'], $validated['quantity']);
 
         return response()->noContent();
     }
