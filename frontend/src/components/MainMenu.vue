@@ -5,7 +5,7 @@ import {InputText} from "primevue";
 import Button from "primevue/button";
 import {MegaMenu} from "primevue";
 import useCartStore from "../stores/cart.js";
-import axiosClient from "../axios.js";
+import LogoutButton from "./LogoutButton.vue";
 
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
@@ -54,6 +54,7 @@ const isVisible = ref(false)
       <Button v-else asChild v-slot="slotProps" variant="text">
         <RouterLink :to="{name: 'Login'}" :class="slotProps.class">Login</RouterLink>
       </Button>
+      <LogoutButton v-if="user"/>
     </template>
   </MegaMenu>
 </template>

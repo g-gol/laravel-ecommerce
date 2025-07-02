@@ -27,6 +27,11 @@ const useCartStore = defineStore('cart', {
         removeItem(itemId) {
             axiosClient.delete(`/api/cart/items/${itemId}`)
                 .then(this.fetchCart)
+        },
+        unsetCart() {
+            this.items = []
+            this.count = 0
+            this.total = 0
         }
     }
 })
