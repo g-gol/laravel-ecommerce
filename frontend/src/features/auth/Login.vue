@@ -15,13 +15,11 @@ const errors = ref({})
 
 function login() {
   axiosClient.get('/sanctum/csrf-cookie').then(() => {
-    console.log(formData.value)
     axiosClient.post('/login', formData.value)
         .then(() => {
           router.push({name: 'Home'})
         })
         .catch(err => {
-          console.log(err)
           errors.value = err.response.data.errors
         })
   })

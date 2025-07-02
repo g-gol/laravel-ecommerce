@@ -15,9 +15,9 @@ function getCategories() {
   axiosClient.get('/api/categories')
       .then(res => {
         categories.value = res.data.data
-        console.log(categories.value)
       })
 }
+
 function changed(event) {
   emit('categoryChanged', event.value)
 }
@@ -28,7 +28,8 @@ function changed(event) {
     <h2 class="text-xl mb-8">Filters</h2>
     <div v-if="categories" class="flex flex-col items-start mb-2">
       <h3 class="mb-2">Category</h3>
-      <Listbox @change="changed" v-model="selected" :options="categories" optionValue="id" optionLabel="name" class="w-full md:w-56" />
+      <Listbox @change="changed" v-model="selected" :options="categories" optionValue="id" optionLabel="name"
+               class="w-full md:w-56"/>
     </div>
   </div>
 </template>

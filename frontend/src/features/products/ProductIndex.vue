@@ -9,9 +9,9 @@ import ProductFilters from "./components/ProductFilters.vue";
 import useCartStore from "../../stores/cart.js";
 
 const orderOptions = ref([
-  { name: 'latest' },
-  { name: 'cheap' },
-  { name: 'expensive' },
+  {name: 'latest'},
+  {name: 'cheap'},
+  {name: 'expensive'},
 ])
 
 const order = ref()
@@ -27,14 +27,16 @@ const filters = ref({
   order: null,
   category: null
 })
+
 function getProducts() {
-  axiosClient.get(`/api/products`, { params: filters.value})
+  axiosClient.get(`/api/products`, {params: filters.value})
       .then(res => {
         products.value = res.data.data
         totalPages.value = res.data.meta.total
         perPage.value = res.data.meta.per_page
       })
 }
+
 function changeOrder() {
   filters.value.order = order.value.name
   filters.value.page = 1
@@ -50,10 +52,11 @@ function changePage(event) {
   })
 }
 
-function changeCategory(id){
+function changeCategory(id) {
   filters.value.category = id
   getProducts()
 }
+
 const cartStore = useCartStore()
 </script>
 
@@ -63,7 +66,8 @@ const cartStore = useCartStore()
     <div class="col-span-6 grid grid-cols-3 gap-8">
       <div class="flex justify-between items-baseline col-span-3 mb-8">
         <span>Page: {{ filters.page }}</span>
-        <Select @change="changeOrder" v-model="order" :options="orderOptions" optionLabel="name" placeholder="default" class="w-full md:w-56" />
+        <Select @change="changeOrder" v-model="order" :options="orderOptions" optionLabel="name" placeholder="default"
+                class="w-full md:w-56"/>
       </div>
       <Card v-for="product in products" style="overflow: hidden" pt:title:class="truncate">
         <template #header>
@@ -79,18 +83,21 @@ const cartStore = useCartStore()
         <template #footer>
           <div class="flex justify-between gap-4 mt-1">
             <Button asChild v-slot="slotProps" variant="text" severity="secondary" outlined class="w-full">
-              <RouterLink :to="{name: 'ProductShow', params: {id: product.id}}" :class="slotProps.class">See more</RouterLink>
+              <RouterLink :to="{ name: 'ProductShow', params: { id: product.id } }" :class="slotProps.class">See more
+              </RouterLink>
             </Button>
-            <Button v-if="!cartStore.items.some((item) => item.product.id === product.id)" @click.prevent="cartStore.addToCart(product.id)" severity="success" label="Buy" />
+            <Button v-if="!cartStore.items.some((item) => item.product.id === product.id)"
+                    @click.prevent="cartStore.addToCart(product.id)" severity="success" label="Buy"/>
             <Button v-else asChild v-slot="slotProps" severity="primary" class="w-full">
-              <RouterLink :to="{name: 'CartShow'}" :class="slotProps.class">Cart
+              <RouterLink :to="{ name: 'CartShow' }" :class="slotProps.class">Cart
               </RouterLink>
             </Button>
           </div>
         </template>
       </Card>
     </div>
-    <Paginator @page="changePage" :totalRecords="totalPages" :rows="perPage" :first="(filters.page - 1) * perPage" class="col-start-2 col-span-6 mt-8"/>
+    <Paginator @page="changePage" :totalRecords="totalPages" :rows="perPage" :first="(filters.page - 1) * perPage"
+               class="col-start-2 col-span-6 mt-8"/>
   </div>
 
 </template>
