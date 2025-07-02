@@ -8,6 +8,7 @@ use App\Models\Product;
 class CartService
 {
     protected ?Cart $cart = null;
+
     public function addItem(string|int $product_id, int $quantity = 1): void
     {
         $cart = $this->cart ?? $this->handleCart();
@@ -44,5 +45,42 @@ class CartService
         }
 
         return $this->cart;
+    }
+
+    public function mergeGuestCart(): void
+    {
+        if (!auth()->check()) {
+            return;
+        }
+        if (!$guestToken = request()->cookie('guest_token')) {
+            return;
+        }
+
+        $guestCart = Cart::query()
+            ->where('guest_token', $guestToken)
+            ->with('items.product')->first();
+
+        if (!$guestCart) {
+            return;
+        }
+
+        $userCart = Cart::query()->firstOrCreate(['user_id' => auth()->id()]);
+
+        foreach ($guestCart->items as $item) {
+            $product = $item->product;
+
+            if ($userCartItem = $userCart->items()->where('product_id', $product->id)->first()) {
+                $userCartItem->quantity += $item->quantity;
+                $userCartItem->save();
+            } else {
+                $userCart->items()->create([
+                    'product_id' => $product->id,
+                    'quantity' => $item->quantity,
+                    'price' => $item->price
+                ]);
+            }
+        }
+
+        $guestCart->delete();
     }
 }

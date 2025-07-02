@@ -6,6 +6,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Http\Request;
@@ -13,6 +14,10 @@ use Illuminate\Validation\ValidationException;
 
 class AuthService
 {
+    public function __construct(private CartService $cartService)
+    {
+    }
+
     public function register(Request $request): User
     {
         $request->validate([
@@ -39,6 +44,10 @@ class AuthService
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        $this->cartService->mergeGuestCart();
+
+        Cookie::queue(Cookie::forget('guest_token'));
     }
 
     function logout(Request $request): void
