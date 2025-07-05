@@ -21,3 +21,4 @@ Route::get('/categories', CategoryController::class);
 Route::put('/cart/items', [CartItemController::class, 'update']);
 Route::delete('/cart/items/{item}', [CartItemController::class, 'destroy']);
 Route::get('/cart/preview', [CartController::class, 'preview']);
+Route::get('/cart', [CartController::class, 'show']);

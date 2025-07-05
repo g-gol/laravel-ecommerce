@@ -17,7 +17,7 @@ const useCartStore = defineStore('cart', {
                 })
         },
         addToCart(productId, quantity = 1) {
-            axiosClient.put('/api/cart/items', {
+            return axiosClient.put('/api/cart/items', {
                 product_id: productId,
                 quantity: quantity,
             }).then(() => {
@@ -25,7 +25,7 @@ const useCartStore = defineStore('cart', {
             })
         },
         removeItem(itemId) {
-            axiosClient.delete(`/api/cart/items/${itemId}`)
+            return axiosClient.delete(`/api/cart/items/${itemId}`)
                 .then(this.fetchCart)
         },
         unsetCart() {

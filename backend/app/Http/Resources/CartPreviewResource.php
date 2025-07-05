@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CartResource extends JsonResource
+class CartPreviewResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -25,12 +25,9 @@ class CartResource extends JsonResource
                     'product' => [
                         'id' => $item->product->id,
                         'name' => $item->product->name,
-                        'image' => asset('storage/' . ($item->product->image ?? 'default.jpg')),
-                        'amount' => $item->product->amount,
-                        'category' => $item->product->category->name
                     ]
                 ];
-            }),
+            })
         ];
     }
 }
