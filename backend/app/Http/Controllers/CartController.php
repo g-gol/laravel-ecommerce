@@ -12,7 +12,15 @@ class CartController extends Controller
 {
     public function show(): JsonResource
     {
-        $cart = Cart::query()->with('items.product.category')->where('user_id', auth()->id())->first();
+        if (!auth()->check()) {
+            abort(401, 'Unauthorized');
+        }
+
+        $cart = Cart::query()
+            ->with('items.product.category')
+            ->where('user_id', auth()?->id())
+            ->first();
+
         return new CartResource($cart);
     }
 
