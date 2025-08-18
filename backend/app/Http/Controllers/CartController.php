@@ -12,10 +12,6 @@ class CartController extends Controller
 {
     public function show(): JsonResource
     {
-        if (!auth()->check()) {
-            abort(401, 'Unauthorized');
-        }
-
         $cart = Cart::query()
             ->with('items.product.category')
             ->where('user_id', auth()?->id())
